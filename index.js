@@ -27,7 +27,7 @@ bot.on("message", async message => {
     if(!command.startsWith(prefix)) return;
 
     if(command === `${prefix}pico`) {
-         
+        return message.channel.send("[Backdashes in Japanese]");
     }
 
     if(command === `${prefix}userinfo`) {
@@ -53,9 +53,11 @@ bot.on("message", async message => {
         
         //Get the mentioned user/mutee(is that a word? lol)
         //Can be a mention(@Kav) or an ID number(123456789)
-        let toMute = message.mentions.users.first() || message.guild.members.get(args[0]);
+        let toMute = message.guild.member(message.mentions.users.first()) || message.guild.members.get(args[0]);
         if(!toMute) return message.channel.send("Huh? Please specify who is to be muted.");
 
+        if(toMute.id === message.author.id) return message.channel.send("You can't mute yourself, bud.");
+        
         let role = message.guild.roles.find(r => r.name === "Botsp0tGGMuted");
         if(!role) {
             try{
@@ -76,10 +78,10 @@ bot.on("message", async message => {
             }
         }
 
-        if(toMute.roles.has(role.id)) return message.channel.send(`${toMute} has already been muted!`);
+        if(toMute.roles.has(role.id)) return message.channel.send("They've already been muted!");
 
         await toMute.addRole(role);
-        message.channel.send(`${toMute} has been muted.`);
+        message.channel.send("Muted successfully.");
 
         return;
     }
