@@ -13,6 +13,7 @@ As of right now I'm deploying this version of the bot to stress-test the
 music features. Behind the scenes, I'm working on some other features, all of which will be less intensive 
 and easier to test than the music playback.
 Commands:
+
 .play <url>|<search> - Plays the given video or searches, if already a song is playing, it'll be added to
 the queue
 
