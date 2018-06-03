@@ -1,21 +1,12 @@
 //const botsettings = require("./botsettings.json");
 const Discord = require('discord.js');
+const music = require('discord.js-musicbot-addon');
 const fs = require("fs");
 const bot = new Discord.Client();
 const discordkey = require("./discordkey.json");
-const ytdl = require("ytdl-core");
-const request = require("request");
-const getYoutubeID = require("get-youtube-id");
-const fetchVideoInfo = require("youtube-info");
 var config = JSON.parse(fs.readFileSync('./botsettings.json', 'utf-8'));
 const yt_api_key = config.yt_api_key;
 const bot_controller = config.bot_controller;
-var queue = [];
-var isPlaying = false;
-var dispatcher = null;
-var voiceChannel = null;
-var skipReq = 0;
-var skippers = [];
 const prefix = ".";
 bot.commands = new Discord.Collection();
 
@@ -50,6 +41,7 @@ bot.on("ready", async () => {
 });
 
 bot.on("message", async message => {
+    /*
     if(message.author.bot) return;
     if(message.channel.type === "dm") return;
 
@@ -57,12 +49,23 @@ bot.on("message", async message => {
     let command = messageArray[0];
     let args = messageArray.slice(1);
     let mess = message.content.toLowerCase();
+    const member = message.member;
 
+    
     if(!command.startsWith(prefix)) return;
-
+    if(command.startsWith(prefix + "play" ||
+        prefix + "skip" || prefix + "queue" || prefix + "pause"
+        || prefix + "resume" || prefix + "volume" || prefix + "leave"
+        || prefix + "clearqueue")) {
+        music(bot, {prefix: '.', clearInvoker: true});
+        return;
+    }
+    
     let cmd = bot.commands.get(command.slice(prefix.length));
     if(cmd) cmd.run(bot, message, args);
-
+    */
 });
+
+music.start(bot, {youtubeKey: yt_api_key, prefix: '.'});
 
 bot.login(discordkey.key);
